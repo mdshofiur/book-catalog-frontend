@@ -1,11 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getBooks } from './getSlice';
 
-export const fetchBooks = createAsyncThunk(
+export const fetchBooks = createAsyncThunk<any, any, any>(
    'books/fetchBooks',
-   async (queryParams: any) => {
-      const response = await getBooks(queryParams ?? null);
-      return response.books;
+   async (queryParams: any, thunkAPI) => {
+      try {
+         const response = await getBooks(queryParams ?? null);
+         return response;
+      } catch (error: any) {
+         return thunkAPI.rejectWithValue(error.message);
+      }
    },
 );
 
