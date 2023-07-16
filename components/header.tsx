@@ -45,6 +45,9 @@ const Header = () => {
           <Link href="/" className="text-gray-300 hover:text-white">
             Home
           </Link>
+          <Link href="/add-book" className="text-gray-300 hover:text-white">
+            Add Book
+          </Link>
           {currentUser ? (
             <>
               <button
