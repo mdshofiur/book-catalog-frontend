@@ -1,4 +1,6 @@
 import React from "react";
+import Link from "next/link";
+
 
 const Page = () => {
   return (
@@ -11,9 +13,9 @@ const Page = () => {
         <p>Publication Date: </p>
       </div>
       <div className="flex justify-between">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+        <Link href="/books-list/1/edit-book" className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
           Edit
-        </button>
+        </Link>
         <button className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">
           Delete
         </button>

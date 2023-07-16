@@ -39,7 +39,8 @@ const Header = () => {
     <header className="bg-gray-900 text-white py-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
-          <h1 className="text-lg font-semibold">bookcatalog</h1>
+          <h1 className="text-lg font-semibold uppercase  first-line:tracking-widest
+">bookcatalog</h1>
         </div>
         <nav className="flex items-center gap-4 ">
           <Link href="/" className="text-gray-300 hover:text-white">
