@@ -70,7 +70,12 @@ const Page = () => {
                      </Link>
                      <p>Author: {book?.author}</p>
                      <p>Genre: {book?.genre}</p>
-                     <p>Publication Date: {book?.publicationDate}</p>
+                     <p className='mb-5'>Publication Date: {book?.publicationDate}</p>
+                     <Link
+                        href={`/books-list/${book._id}`}
+                        className='bg-blue-500 hover:bg-blue-700 text-white font-semibold p-2 px-4 rounded'>
+                        Details
+                     </Link>
                   </div>
                ))}
             </div>

@@ -50,6 +50,16 @@ export const booksApi = createApi({
             { type: 'Books', id },
          ],
       }),
+      updateReview: builder.mutation<void, Partial<Book>>({
+         query: ({ id, ...patch }) => ({
+            url: `/books/book/${id}/reviews`,
+            method: 'PUT',
+            body: patch,
+         }),
+         invalidatesTags: (result, error, { id }: any) => [
+            { type: 'Books', id },
+         ],
+      }),
    }),
 });
 
@@ -59,4 +69,5 @@ export const {
    useAddBookMutation,
    useDeleteBookMutation,
    useUpdateBookMutation,
+   useUpdateReviewMutation
 } = booksApi;

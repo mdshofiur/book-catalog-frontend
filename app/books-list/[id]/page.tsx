@@ -15,10 +15,9 @@ async function getBook(id: number) {
 const Page = async ({ params }: { params: { id: number } }) => {
    const { id } = params;
    const bookData = await getBook(id);
-   console.log("🚀 ~ file: page.tsx:18 ~ Page ~ bookData:", bookData)
-   
+
    return (
-      <div className='container mx-auto h-screen py-10'>
+      <div className='container mx-auto min-h-screen py-10'>
          <h2 className='text-2xl font-semibold mb-4'>Book Details</h2>
          <div className='bg-white rounded-lg shadow-md p-6 mb-6'>
             <h3 className='text-xl font-semibold mb-2'>
@@ -33,15 +32,20 @@ const Page = async ({ params }: { params: { id: number } }) => {
             {/* render review  */}
             <h4 className='text-lg font-semibold mb-2'>Reviews:</h4>
             {/* Render reviews dynamically */}
-            <div className='grid grid-cols-8 gap-4 py-5'>
-               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(
-                  (item, index) => (
-                     <div key={index}>
-                        <p>Review {index}</p>
+
+            {bookData?.book?.reviews.length === 0 ? (
+               <p className='text-gary-500 text-base text-center py-5'>
+                  No reviews yet
+               </p>
+            ) : (
+               <div className='grid grid-cols-5 gap-4 py-5'>
+                  {bookData?.book?.reviews?.map((item: any, index: number) => (
+                     <div key={index} className='border p-5 rounded'>
+                        <p className='text-gary-500 text-base'>{item}</p>
                      </div>
-                  ),
-               )}
-            </div>
+                  ))}
+               </div>
+            )}
          </div>
          {/* submit review  */}
          <Review id={bookData?.book?._id} />
