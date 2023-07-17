@@ -15,6 +15,7 @@ export default function AddNewBook() {
       register,
       handleSubmit,
       formState: { errors },
+      reset,
    } = useForm<FormData>();
 
    const [addBook, { isLoading }] = useAddBookMutation();
@@ -25,6 +26,7 @@ export default function AddNewBook() {
             toast.success('Book added successfully', {
                autoClose: 2000,
             });
+            reset();
          })
          .catch((error: any) => {
             toast.error(error.message, {
@@ -93,7 +95,7 @@ export default function AddNewBook() {
                <button
                   type='submit'
                   className='flex items-center gap-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded'>
-                  Submit
+                  Add Book
                   {isLoading && (
                      <svg
                         className='animate-spin -ml-1 mr-3 h-5 w-5 text-white'
