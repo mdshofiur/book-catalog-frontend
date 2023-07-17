@@ -11,7 +11,7 @@ type FormValues = {
   password: string;
 };
 
-export default function Login() {
+const Login = () => {
   const router = useRouter()
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
 
@@ -59,3 +59,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default Login;

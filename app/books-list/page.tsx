@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Puff } from 'react-loader-spinner';
 import { useGetBooksQuery } from '@/redux/booksSlice';
 
-const Page = () => {
+const BookList = () => {
    const [searchData, setSearchData] = useState({});
 
    const { register, handleSubmit } = useForm();
@@ -114,4 +114,4 @@ const Page = () => {
    );
 };
 
-export default Page;
+export default BookList;

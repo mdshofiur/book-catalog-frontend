@@ -13,7 +13,7 @@ type FormValues = {
   lastName: string;
 };
 
-export default function Register() {
+const  Register = () => {
   const router = useRouter()
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
 
@@ -72,3 +72,4 @@ export default function Register() {
     </div>
   );
 }
+export default Register

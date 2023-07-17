@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useGetBooksQuery } from '@/redux/booksSlice';
 import Link from 'next/link';
 
-export default function Home() {
+const Home = () => {
    const [searchData, setSearchData] = useState({});
    const { data: books, isLoading } = useGetBooksQuery(searchData);
    return (
@@ -42,3 +42,6 @@ export default function Home() {
       </main>
    );
 }
+
+export default Home;
+

@@ -10,7 +10,7 @@ interface FormData {
    genre: string;
 }
 
-export default function AddNewBook() {
+const AddNewBook = () => {
    const {
       register,
       handleSubmit,
@@ -121,3 +121,5 @@ export default function AddNewBook() {
       </div>
    );
 }
+
+export default AddNewBook;
