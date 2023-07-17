@@ -1,39 +1,10 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { authConfig } from '@/firebase/firebase-auth';
-import { User } from 'firebase/auth';
-import { toast } from 'react-toastify';
+import useAuthentication from '@/hook/useAuthentication';
 
 const Header = () => {
-   const [currentUser, setCurrentUser] = useState<User | null>(null);
-
-   useEffect(() => {
-      const unsubscribe = onAuthStateChanged(authConfig, (user) => {
-         if (user) {
-            setCurrentUser(user);
-         } else {
-            setCurrentUser(null);
-         }
-      });
-
-      return () => unsubscribe();
-   }, []);
-
-   const handleLogout = async () => {
-      try {
-         await signOut(authConfig);
-         setCurrentUser(null);
-         toast.success('Logout success!', {
-            autoClose: 2000,
-         });
-      } catch (error) {
-         toast.error('Logout failed!', {
-            autoClose: 2000,
-         });
-      }
-   };
+   const { currentUser, handleLogout } = useAuthentication();
 
    return (
       <header className='bg-gray-900 text-white py-4'>
@@ -49,11 +20,7 @@ const Header = () => {
                <Link href='/' className='text-gray-300 hover:text-white'>
                   Home
                </Link>
-               <Link
-                  href='/add-book'
-                  className='text-gray-300 hover:text-white'>
-                  Add Book
-               </Link>
+
                <Link
                   href='/books-list'
                   className='text-gray-300 hover:text-white'>
@@ -61,6 +28,11 @@ const Header = () => {
                </Link>
                {currentUser ? (
                   <>
+                     <Link
+                        href='/add-book'
+                        className='text-gray-300 hover:text-white'>
+                        Add Book
+                     </Link>
                      <button
                         onClick={handleLogout}
                         className='text-gray-300 hover:text-white'>
@@ -73,12 +45,12 @@ const Header = () => {
                      <Link
                         href='/login'
                         className='text-gray-300 hover:text-white'>
-                        Log In
+                        Sign In
                      </Link>
                      <Link
                         href='/register'
                         className='text-gray-300 hover:text-white'>
-                        Register
+                        Sign Up
                      </Link>
                   </>
                )}

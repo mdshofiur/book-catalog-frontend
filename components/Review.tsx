@@ -1,10 +1,11 @@
 'use client';
-
+import useAuthentication from '@/hook/useAuthentication';
 import { useUpdateReviewMutation } from '@/redux/booksSlice';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 export const Review = ({ id }: any) => {
+   const { currentUser } = useAuthentication();
    const [updateReview, { isLoading }] = useUpdateReviewMutation();
 
    const {
@@ -41,7 +42,12 @@ export const Review = ({ id }: any) => {
             {errors.review && (
                <span className='text-red-500'>This field is required</span>
             )}
-            <button className='flex items-center gap-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 mt-4 rounded'>
+            <button
+               disabled={!currentUser}
+               type='submit'
+               className={`flex items-center gap-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 mt-4 rounded ${
+                  !currentUser && 'cursor-not-allowed opacity-50'
+               }`}>
                Review
                {isLoading && (
                   <svg

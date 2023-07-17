@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useDeleteBookMutation } from '@/redux/booksSlice';
 import { useRouter } from 'next/navigation';
 import { confirmAlert } from 'react-confirm-alert';
+import useAuthentication from '@/hook/useAuthentication';
 
 interface BookEditDeleteProps {
    bookData: any;
@@ -12,7 +13,7 @@ interface BookEditDeleteProps {
 
 export const BookEditDelete = ({ bookData }: BookEditDeleteProps) => {
    const router = useRouter();
-
+   const { currentUser } = useAuthentication();
    const [deleteBook, { isLoading }] = useDeleteBookMutation();
 
    const onSubmit = (id: any) => {
@@ -47,16 +48,36 @@ export const BookEditDelete = ({ bookData }: BookEditDeleteProps) => {
       });
    };
 
+   const unauthenticatedMessage = () => {
+      toast.error('You must be logged in to do this', {
+         autoClose: 2000,
+      });
+   };
+
    return (
       <div className='flex justify-between'>
-         <Link
-            href={`/books-list/${bookData?.book?._id}/edit-book`}
-            className='bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded'>
-            Edit
-         </Link>
+         {currentUser ? (
+            <Link
+               href={`/books-list/${bookData?.book?._id}/edit-book`}
+               className='bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded'>
+               Edit
+            </Link>
+         ) : (
+            <button
+               onClick={unauthenticatedMessage}
+               className='bg-blue-500 text-white font-semibold py-2 px-4 rounded cursor-not-allowed opacity-50'>
+               Edit
+            </button>
+         )}
          <button
-            onClick={() => submit(bookData?.book?._id)}
-            className='flex items-center gap-3 bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded'>
+            onClick={() =>
+               currentUser
+                  ? submit(bookData?.book?._id)
+                  : unauthenticatedMessage()
+            }
+            className={`flex items-center gap-3 bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded ${
+               !currentUser && 'cursor-not-allowed opacity-50'
+            }`}>
             Delete
             {isLoading && (
                <svg
