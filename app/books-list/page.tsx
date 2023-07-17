@@ -31,8 +31,17 @@ const Page = () => {
                      <select {...register('genre')} className='p-2 ml-4'>
                         <option value=''>All Genres</option>
                         {/* Render genre options dynamically */}
-                        <option value='Horror'>Horror</option>
-                        <option value='Funny'>Funny</option>
+                        <option value='Hadith'>Hadith</option>
+                        <option value='Biography'>Biography</option>
+                        <option value='Biography'>Biography</option>
+                        <option value='Islamic Lifestyle'>
+                           Islamic Lifestyle
+                        </option>
+                        <option value='Tafsir'>Tafsir</option>
+                        <option value='Self-development'>
+                           Self-development
+                        </option>
+                        <option value='Spirituality'>Spirituality</option>
                      </select>
                      <select
                         {...register('publicationYear')}
@@ -70,7 +79,9 @@ const Page = () => {
                      </Link>
                      <p>Author: {book?.author}</p>
                      <p>Genre: {book?.genre}</p>
-                     <p className='mb-5'>Publication Date: {book?.publicationDate}</p>
+                     <p className='mb-5'>
+                        Publication Date: {book?.publicationDate}
+                     </p>
                      <Link
                         href={`/books-list/${book._id}`}
                         className='bg-blue-500 hover:bg-blue-700 text-white font-semibold p-2 px-4 rounded'>
