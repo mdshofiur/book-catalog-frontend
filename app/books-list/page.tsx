@@ -9,7 +9,7 @@ const Page = () => {
    const [searchData, setSearchData] = useState({});
 
    const { register, handleSubmit } = useForm();
-   const { data: books, isLoading, isError } = useGetBooksQuery(searchData);
+   const { data: books, isLoading } = useGetBooksQuery(searchData);
 
    const onSubmit = (data: any) => {
       setSearchData(data);

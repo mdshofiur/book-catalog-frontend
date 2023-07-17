@@ -1,9 +1,12 @@
 import React from 'react';
-import Link from 'next/link';
 import { BookEditDelete } from '@/components/book-edit-delete';
 
+export const fetchCache = 'force-no-store';
+
 async function getBook(id: number) {
-   const res = await fetch(`http://localhost:2000/api/books/book/${id}`);
+   const res = await fetch(`http://localhost:2000/api/books/book/${id}`, {
+      cache: 'no-store',
+   });
    const book = await res.json();
    return book;
 }

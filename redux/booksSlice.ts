@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 interface Book {
-   id: string;
+   [x: string]: any;
+   id?: any;
    title: string;
    author: string;
    genre: string;
@@ -10,10 +11,17 @@ interface Book {
 export const booksApi = createApi({
    reducerPath: 'booksApi',
    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:2000/api' }),
-   tagTypes: ['books'],
+   tagTypes: ['Books'],
    endpoints: (builder) => ({
-      getBooks: builder.query({
+      getBooks: builder.query<Book, any>({
          query: (queryParams) => `books?${new URLSearchParams(queryParams)}`,
+         providesTags: (result) =>
+            result ? [{ type: 'Books', id: result.id }] : [],
+      }),
+      getBook: builder.query<Book, any>({
+         query: (id) => `/books/book/${id}`,
+         providesTags: (result) =>
+            result ? [{ type: 'Books', id: result.id }] : [],
       }),
       addBook: builder.mutation<void, Partial<Book>>({
          query: (body) => ({
@@ -21,7 +29,7 @@ export const booksApi = createApi({
             method: 'POST',
             body,
          }),
-         invalidatesTags: (result, error, { id }) => [{ type: 'books', id }],
+         invalidatesTags: (result, error, { id }) => [{ type: 'Books', id }],
       }),
       deleteBook: builder.mutation<void, string>({
          query: (id) => ({
@@ -29,11 +37,26 @@ export const booksApi = createApi({
             method: 'DELETE',
          }),
          invalidatesTags: (result, error, { id }: any) => [
-            { type: 'books', id },
+            { type: 'Books', id },
+         ],
+      }),
+      updateBook: builder.mutation<void, Partial<Book>>({
+         query: ({ id, ...patch }) => ({
+            url: `/books/book/${id}`,
+            method: 'PUT',
+            body: patch,
+         }),
+         invalidatesTags: (result, error, { id }: any) => [
+            { type: 'Books', id },
          ],
       }),
    }),
 });
 
-export const { useGetBooksQuery, useAddBookMutation, useDeleteBookMutation } =
-   booksApi;
+export const {
+   useGetBooksQuery,
+   useGetBookQuery,
+   useAddBookMutation,
+   useDeleteBookMutation,
+   useUpdateBookMutation,
+} = booksApi;
