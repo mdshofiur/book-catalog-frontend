@@ -1,29 +1,19 @@
 'use client';
-import React, { useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchBooks } from '@/redux/booksSlice';
 import { Puff } from 'react-loader-spinner';
+import { useGetBooksQuery } from '@/redux/booksSlice';
 
 const Page = () => {
-   const dispatch = useDispatch();
-   const { register, handleSubmit } = useForm();
-   const books = useSelector((state: any) => state.books.books);
-   const loading = useSelector((state: any) => state.books.loading);
-   const error = useSelector((state: any) => state.books.error);
+   const [searchData, setSearchData] = useState({});
 
-   useEffect(() => {
-      dispatch(fetchBooks({})); // Fetch all books
-   }, [dispatch]);
+   const { register, handleSubmit } = useForm();
+   const { data: books, isLoading, isError } = useGetBooksQuery(searchData);
 
    const onSubmit = (data: any) => {
-      dispatch(fetchBooks(data));
+      setSearchData(data);
    };
-
-   if (error) {
-      return <div>Error: {error}</div>;
-   }
 
    return (
       <Fragment>
@@ -69,7 +59,7 @@ const Page = () => {
             </div>
             {/* Books List */}
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4'>
-               {books?.map((book: any, index: number) => (
+               {books?.books?.map((book: any, index: number) => (
                   <div
                      key={index}
                      className='bg-white rounded-lg shadow-md p-4'>
@@ -85,14 +75,14 @@ const Page = () => {
                ))}
             </div>
             {/* Not Found Message */}
-            {!books?.length && !loading && (
+            {!books?.books?.length && !isLoading && (
                <h2 className='text-2xl font-semibold mb-4 text-center'>
                   No Books Found
                </h2>
             )}
          </div>
          {/* Loading Spinner */}
-         {loading && (
+         {isLoading && (
             <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-900 bg-opacity-50'>
                <Puff
                   height='80'
