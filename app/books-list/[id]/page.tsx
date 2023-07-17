@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { BookEditDelete } from '@/components/book-edit-delete';
 
 async function getBook(id: number) {
    const res = await fetch(`http://localhost:2000/api/books/book/${id}`);
@@ -22,16 +23,7 @@ const Page = async ({ params }: { params: { id: number } }) => {
             <p>Genre: {bookData?.book?.genre}</p>
             <p>Publication Date: {bookData?.book?.publicationDate}</p>
          </div>
-         <div className='flex justify-between'>
-            <Link
-               href={`/books-list/${bookData?.book?._id}/edit-book`}
-               className='bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded'>
-               Edit
-            </Link>
-            <button className='bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded'>
-               Delete
-            </button>
-         </div>
+         <BookEditDelete bookData={bookData} />
          <div className='mt-10'>
             {/* render review  */}
             <h4 className='text-lg font-semibold mb-2'>Reviews:</h4>
