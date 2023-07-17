@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { useDeleteBookMutation } from '@/redux/booksSlice';
 import { useRouter } from 'next/navigation';
+import { confirmAlert } from 'react-confirm-alert';
 
 interface BookEditDeleteProps {
    bookData: any;
@@ -20,13 +21,30 @@ export const BookEditDelete = ({ bookData }: BookEditDeleteProps) => {
             toast.success('Book deleted successfully', {
                autoClose: 2000,
             });
-            router.push('/');
+            setTimeout(() => {
+               router.push('/books-list');
+            }, 1000);
          })
          .catch((error: any) => {
             toast.error(error.message, {
                autoClose: 2000,
             });
          });
+   };
+
+   const submit = (id: any) => {
+      confirmAlert({
+         message: 'Are you sure to do this?',
+         buttons: [
+            {
+               label: 'Yes',
+               onClick: () => onSubmit(id),
+            },
+            {
+               label: 'No',
+            },
+         ],
+      });
    };
 
    return (
@@ -37,7 +55,7 @@ export const BookEditDelete = ({ bookData }: BookEditDeleteProps) => {
             Edit
          </Link>
          <button
-            onClick={() => onSubmit(bookData?.book?._id)}
+            onClick={() => submit(bookData?.book?._id)}
             className='flex items-center gap-3 bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded'>
             Delete
             {isLoading && (

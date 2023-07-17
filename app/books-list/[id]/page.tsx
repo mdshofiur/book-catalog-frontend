@@ -1,5 +1,6 @@
 import React from 'react';
 import { BookEditDelete } from '@/components/book-edit-delete';
+import { Review } from '@/components/Review';
 
 export const fetchCache = 'force-no-store';
 
@@ -14,7 +15,8 @@ async function getBook(id: number) {
 const Page = async ({ params }: { params: { id: number } }) => {
    const { id } = params;
    const bookData = await getBook(id);
-
+   console.log("🚀 ~ file: page.tsx:18 ~ Page ~ bookData:", bookData)
+   
    return (
       <div className='container mx-auto h-screen py-10'>
          <h2 className='text-2xl font-semibold mb-4'>Book Details</h2>
@@ -42,17 +44,7 @@ const Page = async ({ params }: { params: { id: number } }) => {
             </div>
          </div>
          {/* submit review  */}
-         <div className='mt-6'>
-            <h4 className='text-lg font-semibold mb-2'>Submit a Review</h4>
-            <form>
-               <textarea
-                  className='border-gray-300 border-solid border px-4 py-2 w-full'
-                  placeholder='Write your review here...'></textarea>
-               <button className='bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 mt-4 rounded'>
-                  Submit
-               </button>
-            </form>
-         </div>
+         <Review id={bookData?.book?._id} />
       </div>
    );
 };
