@@ -10,7 +10,7 @@ interface Book {
 
 export const booksApi = createApi({
    reducerPath: 'booksApi',
-   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:2000/api' }),
+   baseQuery: fetchBaseQuery({ baseUrl: 'https://book-catalog-backend-rho.vercel.app/api' }),
    tagTypes: ['Books'],
    endpoints: (builder) => ({
       getBooks: builder.query<Book, any>({
