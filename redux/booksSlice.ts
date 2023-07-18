@@ -10,7 +10,7 @@ interface Book {
 
 export const booksApi = createApi({
    reducerPath: 'booksApi',
-   baseQuery: fetchBaseQuery({ baseUrl: 'https://book-catalog-backend-bay.vercel.app/api' }),
+   baseQuery: fetchBaseQuery({ baseUrl: 'https://book-catalog-backend-seven.vercel.app/api' }),
    tagTypes: ['Books'],
    endpoints: (builder) => ({
       getBooks: builder.query<Book, any>({
@@ -19,7 +19,7 @@ export const booksApi = createApi({
             result ? [{ type: 'Books', id: result.id }] : [],
       }),
       getBook: builder.query<Book, any>({
-         query: (id) => `/books/book/${id}`,
+         query: (id) => `/books/${id}`,
          providesTags: (result) =>
             result ? [{ type: 'Books', id: result.id }] : [],
       }),
@@ -33,7 +33,7 @@ export const booksApi = createApi({
       }),
       deleteBook: builder.mutation<void, string>({
          query: (id) => ({
-            url: `/books/book/${id}`,
+            url: `/books/${id}`,
             method: 'DELETE',
          }),
          invalidatesTags: (result, error, { id }: any) => [
@@ -42,7 +42,7 @@ export const booksApi = createApi({
       }),
       updateBook: builder.mutation<void, Partial<Book>>({
          query: ({ id, ...patch }) => ({
-            url: `/books/book/${id}`,
+            url: `/books/${id}`,
             method: 'PUT',
             body: patch,
          }),
@@ -52,7 +52,7 @@ export const booksApi = createApi({
       }),
       updateReview: builder.mutation<void, Partial<Book>>({
          query: ({ id, ...patch }) => ({
-            url: `/books/book/${id}/reviews`,
+            url: `/books/${id}/reviews`,
             method: 'PUT',
             body: patch,
          }),

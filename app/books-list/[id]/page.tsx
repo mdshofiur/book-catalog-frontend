@@ -5,7 +5,7 @@ import { Review } from '@/components/Review';
 export const fetchCache = 'force-no-store';
 
 async function getBook(id: number) {
-   const res = await fetch(`https://book-catalog-backend-bay.vercel.app/api/books/book/${id}`, {
+   const res = await fetch(`https://book-catalog-backend-seven.vercel.app/api/books/${id}`, {
       cache: 'no-store',
    });
    const book = await res.json();

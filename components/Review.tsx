@@ -18,12 +18,12 @@ export const Review = ({ id }: any) => {
    const onSubmit: SubmitHandler<any> = async (data) => {
       const newReview = { reviews: data.review };
       try {
-         await updateReview({ id, ...newReview });
-         setTimeout(() => {
+         await updateReview({ id, ...newReview })
+         
             toast.success('Review successfully added', {
                autoClose: 1000,
             });
-         }, 1000);
+       
          reset();
       } catch (error) {
          console.error('Error updating book:', error);
